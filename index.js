@@ -55,160 +55,368 @@ app.get("/", (req, res) => {
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>WhatsApp Server</title>
 <style>
-  :root{
-    --bg:#000000;
-    --card:#0d0d0d;
-    --accent:#ff1a1a; /* Neon Red */
-    --muted:#b36b6b;
-    --success:#4dff88;
-    --danger:#ff3333;
-    --glass: rgba(255,0,0,0.05);
-    --radius:12px;
-    --input-h:52px;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  :root {
+    --wp-blue: #0073aa;
+    --wp-blue-dark: #005a87;
+    --wp-gray-light: #f6f7f7;
+    --wp-gray: #dcdcde;
+    --wp-gray-dark: #8c8f94;
+    --wp-text: #2c3338;
+    --wp-border: #c3c4c7;
+    --wp-success: #00a32a;
+    --wp-warning: #dba617;
+    --wp-error: #d63638;
+    --wp-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    --wp-shadow-lg: 0 4px 6px rgba(0,0,0,0.1);
+    --wp-radius: 4px;
+    --wp-radius-lg: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   }
 
-  html,body{
-    height:100%;
-    margin:0;
-    background:linear-gradient(180deg,#000000 0%, #1a1a1a 60%);
-    color:#ffcccc;
+  html, body {
+    height: 100%;
+    margin: 0;
+    background-color: var(--wp-gray-light);
+    color: var(--wp-text);
+    line-height: 1.5;
   }
 
-  .wrap{max-width:980px;margin:24px auto;padding:20px;}
-
-  header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
-
-  .brand{display:flex;align-items:center;gap:12px}
-
-  .logo{
-    width:48px;height:48px;border-radius:10px;
-    background:linear-gradient(135deg,var(--accent),#cc0000);
-    display:flex;align-items:center;justify-content:center;
-    font-weight:700;color:#000;
-    box-shadow:0 0 8px var(--accent), 0 0 10px var(--accent);
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
   }
 
-  h1{font-size:20px;margin:0}
-  p.lead{margin:0;color:var(--muted);font-size:13px}
-
-  main{display:grid;grid-template-columns:1fr 400px;gap:20px;align-items:start}
-
-  .card{
-    background:var(--card);
-    border-radius:var(--radius);
-    padding:20px;
-    border:1px solid var(--accent);
-    box-shadow:0 0 4px var(--accent), 0 0 9px rgba(255,0,0,0.6);
+  /* Header Styles */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--wp-border);
   }
 
-  .form-row{display:flex;flex-direction:column;gap:14px}
-  label{font-size:13px;color:var(--muted);margin-bottom:4px}
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--wp-radius);
+    background: var(--wp-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    box-shadow: var(--wp-shadow);
+  }
+
+  h1 {
+    font-size: 24px;
+    margin: 0;
+    color: var(--wp-text);
+    font-weight: 600;
+  }
+
+  p.lead {
+    margin: 0;
+    color: var(--wp-gray-dark);
+    font-size: 14px;
+  }
+
+  /* Main Layout */
+  main {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 30px;
+    align-items: start;
+  }
+
+  /* Card Styles */
+  .card {
+    background: white;
+    border-radius: var(--wp-radius-lg);
+    padding: 24px;
+    border: 1px solid var(--wp-border);
+    box-shadow: var(--wp-shadow);
+    margin-bottom: 20px;
+  }
+
+  .card h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--wp-text);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--wp-border);
+  }
+
+  .card h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--wp-text);
+  }
+
+  /* Form Elements */
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  label {
+    font-size: 14px;
+    color: var(--wp-text);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
 
   input[type="text"], input[type="number"], select, textarea {
-    height:var(--input-h);
-    padding:12px 14px;border-radius:10px;
-    border:1px solid var(--accent);
-    background:var(--glass);
-    color:inherit;
-    font-size:15px;
-    width:100%;
-    box-sizing:border-box;
-    box-shadow:0 0 6px var(--accent), 0 0 12px rgba(255,0,0,0.4);
+    height: 40px;
+    padding: 8px 12px;
+    border-radius: var(--wp-radius);
+    border: 1px solid var(--wp-border);
+    background: white;
+    color: var(--wp-text);
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease-in-out;
   }
-  input[type="file"]{height:auto;padding:10px}
 
+  input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+    border-color: var(--wp-blue);
+    outline: none;
+    box-shadow: 0 0 0 1px var(--wp-blue);
+  }
+
+  input[type="file"] {
+    height: auto;
+    padding: 8px 0;
+  }
+
+  /* Button Styles */
   button.primary, button.ghost {
-    display:inline-flex;align-items:center;justify-content:center;
-    padding:0 18px;white-space:nowrap;
-    border-radius:10px;cursor:pointer;
-    transition:0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    white-space: nowrap;
+    border-radius: var(--wp-radius);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.15s ease-in-out;
+    border: 1px solid transparent;
   }
 
-  button.primary{
-    height:48px;border:1px solid var(--accent);
-    background:linear-gradient(90deg,var(--accent),#cc0000);
-    color:#fff;font-weight:700;font-size:15px;
-    box-shadow:0 0 6px var(--accent), 0 0 14px rgba(255,0,0,0.6);
-  }
-  button.primary:hover{filter:brightness(1.15)}
-
-  button.ghost{
-    height:44px;
-    border:1px solid var(--accent);
-    background:transparent;color:var(--accent);font-weight:600;
-    box-shadow:0 0 4px var(--accent), 0 0 10px rgba(255,0,0,0.5);
-  }
-  button.ghost:hover{background:rgba(255,0,0,0.08)}
-
-  .small{font-size:13px;color:var(--muted)}
-
-  .session-id{
-    background:rgba(255,0,0,0.05);
-    padding:8px 12px;border-radius:8px;
-    border:1px solid var(--accent);
-    font-family:monospace;
-    box-shadow:0 0 6px var(--accent), 0 0 14px rgba(255,0,0,0.5);
+  button.primary {
+    height: 40px;
+    background: var(--wp-blue);
+    color: white;
+    border-color: var(--wp-blue);
   }
 
-  .status-list{display:flex;flex-direction:column;gap:10px}
-  .status-item{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:12px;border-radius:8px;
-    background:rgba(255,0,0,0.04);
-    border:1px solid var(--accent);
-    box-shadow:0 0 6px var(--accent), 0 0 14px rgba(255,0,0,0.5);
+  button.primary:hover {
+    background: var(--wp-blue-dark);
+    border-color: var(--wp-blue-dark);
   }
 
-  .logs{
-    max-height:320px;overflow:auto;padding:14px;
-    border-radius:10px;background:#000;
-    font-family:monospace;font-size:13px;color:#ffcccc;
-    line-height:1.4;
-    border:1px solid var(--accent);
-    box-shadow:0 0 8px var(--accent), 0 0 18px rgba(255,0,0,0.6);
+  button.ghost {
+    height: 38px;
+    background: white;
+    color: var(--wp-text);
+    border-color: var(--wp-border);
   }
 
-  footer{margin-top:20px;text-align:center;color:var(--muted);font-size:13px}
-
-  @media (max-width:900px){
-    main{grid-template-columns:1fr;}
-    .logs{max-height:220px}
+  button.ghost:hover {
+    background: var(--wp-gray-light);
+    border-color: var(--wp-gray-dark);
   }
-  @media (max-width:460px){
-    .wrap{padding:12px}
-    .logo{width:44px;height:44px}
-    input[type="text"], input[type="number"], select { height:44px; font-size:14px }
-    button.primary{height:44px;font-size:14px}
+
+  .small {
+    font-size: 13px;
+    color: var(--wp-gray-dark);
+  }
+
+  /* Session ID Display */
+  .session-id {
+    background: var(--wp-gray-light);
+    padding: 8px 12px;
+    border-radius: var(--wp-radius);
+    border: 1px solid var(--wp-border);
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--wp-text);
+  }
+
+  /* Status List */
+  .status-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-radius: var(--wp-radius);
+    background: var(--wp-gray-light);
+    border: 1px solid var(--wp-border);
+  }
+
+  .status-value {
+    font-weight: 600;
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 3px;
+  }
+
+  .status-value.connected {
+    background: #e7f5e9;
+    color: var(--wp-success);
+  }
+
+  .status-value.disconnected {
+    background: #fcf0f1;
+    color: var(--wp-error);
+  }
+
+  /* Logs Box */
+  .logs {
+    max-height: 300px;
+    overflow: auto;
+    padding: 16px;
+    border-radius: var(--wp-radius);
+    background: #f8f9fa;
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--wp-text);
+    line-height: 1.4;
+    border: 1px solid var(--wp-border);
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    color: var(--wp-gray-dark);
+    font-size: 13px;
+    padding-top: 20px;
+    border-top: 1px solid var(--wp-border);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    main {
+      grid-template-columns: 1fr;
+    }
+    
+    .logs {
+      max-height: 220px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .wrap {
+      padding: 16px;
+    }
+    
+    header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .logo {
+      width: 40px;
+      height: 40px;
+    }
+    
+    input[type="text"], input[type="number"], select {
+      height: 38px;
+      font-size: 14px;
+    }
+    
+    button.primary {
+      height: 38px;
+      font-size: 14px;
+    }
+    
+    .card {
+      padding: 20px;
+    }
+  }
+
+  /* Form Controls */
+  .form-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .inline-form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .inline-form input {
+    height: 38px;
+    padding: 8px;
+    border-radius: var(--wp-radius);
+    border: 1px solid var(--wp-border);
+    background: white;
+    color: var(--wp-text);
+    font-size: 14px;
+    width: 180px;
+  }
+
+  /* Helper Text */
+  .helper {
+    font-size: 13px;
+    color: var(--wp-gray-dark);
+    margin-top: 8px;
   }
 </style>
-
 </head>
+
 <body>
   <div class="wrap">
     <header>
       <div class="brand">
-        <div class="logo">HR</div>
+        <div class="logo">WS</div>
         <div>
           <h1>WhatsApp Server</h1>
-          <p class="lead">Made By Hassan Rajput</p>
+          <p class="lead">Made By Faizan Rajpoot</p>
         </div>
       </div>
-      <div style="display:flex;gap:8px;align-items:center">
+      <div class="form-controls">
         <button class="ghost" onclick="showMySessionId()">Show Session</button>
         <a href="/" style="text-decoration:none"><button class="ghost">Home</button></a>
       </div>
     </header>
 
     <main>
-      <!-- LEFT: actions -->
+      <!-- Left Column: Actions -->
       <section>
         <div class="card" aria-labelledby="pairTitle">
-          <h2 id="pairTitle" style="margin-top:0;margin-bottom:8px">Pair Device</h2>
+          <h2 id="pairTitle">Pair Device</h2>
           <div class="form-row">
             <label for="numberInput">WhatsApp Number (with country code)</label>
-            <input id="numberInput" name="number" type="text" placeholder="92300****** OR 91951*****" />
-            <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <input id="numberInput" name="number" type="text" placeholder="e.g. 92300****** or 91951*****" />
+            <div class="form-controls">
               <button class="primary" onclick="generatePairingCode()">Generate Pairing Code</button>
               <button class="ghost" onclick="clearSession()">Clear Session</button>
             </div>
@@ -216,10 +424,8 @@ app.get("/", (req, res) => {
           </div>
         </div>
 
-        <div style="height:14px"></div>
-
         <div class="card" aria-labelledby="sendTitle">
-          <h2 id="sendTitle" style="margin-top:0;margin-bottom:8px">Send Messages</h2>
+          <h2 id="sendTitle">Send Messages</h2>
           <form id="sendForm" action="/send-message" method="POST" enctype="multipart/form-data" class="form-row">
             <label for="targetType">Target Type</label>
             <select id="targetType" name="targetType" required>
@@ -240,34 +446,33 @@ app.get("/", (req, res) => {
             <label for="delaySec">Delay (seconds)</label>
             <input id="delaySec" name="delaySec" type="number" min="1" value="10" required />
 
-            <div style="display:flex;gap:10px;align-items:center">
+            <div class="form-controls">
               <button class="primary" type="submit">Start Sending</button>
               <button class="ghost" type="button" onclick="getMyGroups()">Show Groups</button>
             </div>
           </form>
         </div>
 
-        <div style="height:14px"></div>
-
         <div class="card" aria-labelledby="sessionActions">
-          <h2 id="sessionActions" style="margin-top:0;margin-bottom:8px">Session Controls</h2>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <form id="viewSessionForm" action="/view-session" method="POST" style="display:flex;gap:8px;align-items:center">
-              <input name="sessionId" placeholder="Session ID to view" style="height:44px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" required />
+          <h2 id="sessionActions">Session Controls</h2>
+          <div class="form-controls">
+            <form id="viewSessionForm" action="/view-session" method="POST" class="inline-form">
+              <input name="sessionId" placeholder="Session ID to view" required />
               <button class="ghost" type="submit">View</button>
             </form>
 
-            <form id="stopSessionForm" action="/stop-session" method="POST" style="display:flex;gap:8px;align-items:center">
-              <input name="sessionId" placeholder="Session ID to stop" style="height:44px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" required />
+            <form id="stopSessionForm" action="/stop-session" method="POST" class="inline-form">
+              <input name="sessionId" placeholder="Session ID to stop" required />
               <button class="ghost" type="submit">Stop</button>
             </form>
           </div>
+        </div>
       </section>
 
-      <!-- RIGHT: status & logs -->
+      <!-- Right Column: Status & Logs -->
       <aside>
         <div class="card">
-          <h3 style="margin:0 0 10px 0">Status</h3>
+          <h3>Status</h3>
           <div class="status-list">
             <div class="status-item">
               <div>Connection</div>
@@ -284,10 +489,8 @@ app.get("/", (req, res) => {
           </div>
         </div>
 
-        <div style="height:12px"></div>
-
         <div class="card">
-          <h3 style="margin:0 0 8px 0">Live Logs</h3>
+          <h3>Live Logs</h3>
           <div id="logBox" class="logs small">No logs yet.</div>
         </div>
       </aside>
@@ -299,10 +502,14 @@ app.get("/", (req, res) => {
   </div>
 
   <script>
-    // small helper functions - keep same API calls as original
-    async function generatePairingCode(){
+    // Small helper functions - keep same API calls as original
+    async function generatePairingCode() {
       const number = document.getElementById('numberInput').value.trim();
-      if(!number){ alert('Enter number'); return; }
+      if (!number) { 
+        alert('Enter number'); 
+        return; 
+      }
+      
       const res = await fetch('/code?number=' + encodeURIComponent(number));
       const text = await res.text();
       document.getElementById('pairingResult').innerHTML = text;
@@ -310,9 +517,9 @@ app.get("/", (req, res) => {
       // the server sets localStorage via returned HTML script when pairing succeeds
     }
 
-    function showMySessionId(){
+    function showMySessionId() {
       const sessionId = localStorage.getItem('wa_session_id');
-      if(sessionId){
+      if (sessionId) {
         document.getElementById('activeSession').textContent = sessionId;
         document.getElementById('activeSession').style.fontFamily = 'monospace';
       } else {
@@ -320,48 +527,48 @@ app.get("/", (req, res) => {
       }
     }
 
-    function clearSession(){
+    function clearSession() {
       localStorage.removeItem('wa_session_id');
       document.getElementById('activeSession').textContent = '—';
       alert('Local session cleared (browser only).');
     }
 
-    async function getMyGroups(){
-      try{
+    async function getMyGroups() {
+      try {
         const res = await fetch('/get-groups');
         const html = await res.text();
         // display groups in log box for quick view
         document.getElementById('logBox').innerHTML = html;
-      }catch(e){
+      } catch (e) {
         console.error(e);
         document.getElementById('logBox').textContent = 'Error fetching groups';
       }
     }
 
-    // small SSE-like polling to update connection & logs (non-intrusive)
-    async function pollStatus(){
-      try{
+    // Small SSE-like polling to update connection & logs (non-intrusive)
+    async function pollStatus() {
+      try {
         const sessionId = localStorage.getItem('wa_session_id');
-        if(sessionId){
+        if (sessionId) {
           // fetch session-status page and parse small bits (cheap method)
           const res = await fetch('/session-status?sessionId=' + encodeURIComponent(sessionId));
-          if(res.ok){
+          if (res.ok) {
             const html = await res.text();
             // quick extraction: connection status string between "Connection Status:" and next tag
-            const connMatch = html.match(/Connection Status:[\\s\\S]*?<span[^>]*>([^<]+)</i);
+            const connMatch = html.match(/Connection Status:[\s\S]*?<span[^>]*>([^<]+)</i);
             const connText = connMatch ? connMatch[1].trim() : null;
-            if(connText){
+            if (connText) {
               const el = document.getElementById('connStatus');
               el.textContent = connText.includes('CONNECTED') ? 'CONNECTED' : 'DISCONNECTED';
               el.className = 'status-value ' + (connText.includes('CONNECTED') ? 'connected' : 'disconnected');
             }
             // update task count
-            const taskMatches = html.match(/Active Tasks[\\s\\S]*?<div class="task-list">/i);
+            const taskMatches = html.match(/Active Tasks[\s\S]*?<div class="task-list">/i);
             document.getElementById('taskCount').textContent = taskMatches ? 'Running' : '0';
             document.getElementById('activeSession').textContent = sessionId;
           }
         }
-      }catch(e){
+      } catch (e) {
         // ignore
       } finally {
         setTimeout(pollStatus, 8000);
@@ -371,7 +578,7 @@ app.get("/", (req, res) => {
   </script>
 </body>
 </html>
-    `);
+`);
 });
 
 app.get("/code", async (req, res) => {
